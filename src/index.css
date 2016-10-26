@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+
+.infoWindow {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 5px 5px 20px #888888;
+  min-height: 400px;
+  padding: 20px;
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  transition: all .5s ease-in-out;
+  width: 25vw;
+  z-index: 2;
+}

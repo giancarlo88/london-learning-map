@@ -1,0 +1,70 @@
+{
+  "markers":[
+    {
+       "position": {
+         "lat": 51.5074, 
+         "lng": -0.1278
+       },
+       "key": "London", 
+       "defaultAnimation": 2,
+       "title": "Hey",
+       "info": "HEY!"
+     },
+     {
+       "position": {
+         "lat": 51.522472, 
+         "lng": -0.132457 
+       },
+       "key": "London", 
+       "defaultAnimation": 2,
+       "title": "Hey",
+       "info": "HO!"
+     },
+     {
+      "position": {
+         "lat": 51.520168,
+         "lng": -0.134787 
+       },
+       "key": "London", 
+       "defaultAnimation": 2,
+       "title": "Hey",
+       "info": "<h1>HUsfkjf;akdj;kjdf;ia;ifdnakf;akjfd;kajdf;iaojd;<br>!" 
+     },
+     {
+      "position": {
+         "lat": 51.515254,
+         "lng": -0.135779
+       },
+       "key": "London", 
+       "defaultAnimation": 2,
+       "title": "Hey",       
+       "info": "12345" 
+     },
+     {
+      "position": {
+         "lat": 51.508414, 
+         "lng": -0.132167
+       },
+       "key": "London", 
+       "defaultAnimation": 2,
+       "title": "Hey",
+       "info": "12345"
+       
+     },
+     {
+      "position": {
+         "lat": 51.525663,
+         "lng": -0.099569
+       },
+       "key": "London", 
+       "defaultAnimation": 2,
+       "title": "Hey",       
+       "info": "fdkjfdksjfldj"
+       
+     }
+  ]
+}
+
+
+
+
