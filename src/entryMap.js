@@ -2,84 +2,57 @@ import React, { Component } from 'react';
 import { GoogleMap, GoogleMapLoader } from "react-google-maps";
 import { default as _ } from "lodash";
 import './App.css';
+import $ from 'jquery';
+
 //import $ from 'jquery';
 
 
 class EntryMap extends Component {
-  constructor(){
-      super();
-      this.handleMapClick = this.handleMapClick.bind(this)
-  }
   state = {
     lat: "",
-    lng: ""
+    lng: "",
+    title: "",
+    desc: ""
   }
-  handleMapClick(e){
+  handleSubmit = (e) => {
+    let markers = this.props.markers;
+    console.log(markers)
+    markers.push(
+      {
+       "position": {
+         "lat": this.state.lat, 
+         "lng": this.state.lng
+       },
+       "key": "London", 
+       "defaultAnimation": 2,
+       "title": "Test",
+       "info": "TEST!"
+     }
+    )
+    $.ajax({
+        url: "assets/",
+        method: "POST",
+        data: markers,
+        dataType: 'json',
+        success: (data) => {
+        console.log(data)
+        },
+        error: (xhr, status, err) => {
+          console.error(this.props.url, status, err.toString());
+          }
+        })
+  }
+  handleMapClick = (e) => {
       this.setState({
           lat: e.latLng.lat(),
           lng: e.latLng.lng()
       })
     }
-  
-//   handleMarkerClick(targetMarker) {
-//   this.setState({
-//     markers: this.state.markers.map(marker => {
-//       if (marker === targetMarker) {
-//         return {
-//           ...marker,
-//           showInfo: true,
-//           opacity:.5,
-//         };
-//       } else {
-//         return {
-//           ...marker,
-//           showInfo: false,
-//           opacity: 0.5
-//         }
-//       }
-//     }),
-//   });
-// }
-//   handleMarkerClose(targetMarker) {
-//     this.setState({
-//       markers: this.state.markers.map(marker => {
-//         if (marker === targetMarker) {
-//           return {
-//             ...marker,
-//             showInfo: false,
-//           };
-//         }
-//         return marker;
-//       }),
-//     });
-// }
-  componentDidMount(){
-    // $.ajax({
-    //     url: "map-pointers.json",
-    //     method: "GET",
-    //     dataType: 'json',
-    //     success: function(data) {
-    //     this.setState({markers: data.markers})
-    //       }.bind(this),
-    //     error: function(xhr, status, err) {
-    //       console.error(this.props.url, status, err.toString());
-    //       }.bind(this)
-    //     })
-  }
-//   renderInfoWindow(ref, marker) {
-//     const onCloseclick = this.handleMarkerClose.bind(this, marker);
-//     console.log(ref)
-//     return (
-//     //   <Info
-//     //     title={this.state.markers[ref].title}
-//     //     info={this.state.markers[ref].info}
-//     //     key={`${ref}_info_window`}
-//     //     onCloseclick={onCloseclick}
-//     //   >
-//     //   {this.state.markers[ref].info}
-//     //   </Info>
-//       )
-//   }
+  handleChange = (e) => {
+      this.setState({
+
+      })
+    }
   render() {
     //const {markers} = this.state
      return (    
@@ -125,12 +98,12 @@ class EntryMap extends Component {
          }
      
       />
-    <form>
+    <form onSubmit={this.handleSubmit}>
     <input type="text" className="lat" value={this.state.lat} />
     <input type="text" className="lng" value={this.state.lng} />
-    <input type="text" className="title" />
+    <input type="text" onChange={this.handleChange} className="title" />
     <input type="submit" className="submit" />
-    <textarea></textarea>
+    <textarea onChange={this.handleChange}></textarea>
     </form>
     </div> 
     );

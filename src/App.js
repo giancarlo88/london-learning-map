@@ -111,7 +111,7 @@ class Map extends Component {
          }
      
       />
-      <CMS/>
+      <CMS markers={this.state.markers}/>
       </div>
     );
   }
