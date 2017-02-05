@@ -87,7 +87,8 @@ class Map extends Component {
                 <div 
                   {...this.props}
                   style={{
-                    height: `600px`
+                    height: `100vh`,
+                    width: `100 vw`
                   }}
                 />
               }
@@ -118,12 +119,12 @@ class Map extends Component {
                       ) 
                     }
                   )}
-                <button className='toggle-cms' onClick={this.toggleCMS}>Add a spot on the map!</button>
+                <button className='toggle-cms' onClick={this.toggleCMS}>Add a location...</button>
                 </GoogleMap>
               }
             />
         }
-      {this.state.cms && <CMS markers={this.state.markers}/> }
+      {this.state.cms && <CMS toggleCMS={this.toggleCMS} markers={this.state.markers}/> }
     </div>
     );
   }

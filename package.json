@@ -1,5 +1,6 @@
 {
   "name": "london-learning-map",
+  "homepage": "http://www.ggalliani.com/projects/llm",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
