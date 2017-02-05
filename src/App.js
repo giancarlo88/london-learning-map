@@ -9,9 +9,10 @@ import $ from 'jquery';
 
 class Map extends Component {
   state = {
-    markers: []
+    markers: [], 
+    cms: false
   }
-  handleMarkerClick(targetMarker) {
+  handleMarkerClick (targetMarker) {
   this.setState({
     markers: this.state.markers.map(marker => {
       if (marker === targetMarker) {
@@ -29,8 +30,8 @@ class Map extends Component {
       }
     }),
   });
-}
-  handleMarkerClose(targetMarker) {
+  }
+  handleMarkerClose (targetMarker) {
     this.setState({
       markers: this.state.markers.map(marker => {
         if (marker === targetMarker) {
@@ -42,14 +43,19 @@ class Map extends Component {
         return marker;
       }),
     });
-}
+  }
+  toggleCMS = () => {
+    this.setState({ 
+      cms: !this.state.cms
+    })
+  }
   componentDidMount(){
     $.ajax({
-        url: "map-pointers.json",
+        url: "http://www.ggalliani.com/projects/llm/api.php/map?transform=1",
         method: "GET",
         dataType: 'json',
         success: function(data) {
-        this.setState({markers: data.markers})
+          this.setState({markers: data.map})
           }.bind(this),
         error: function(xhr, status, err) {
           console.error(this.props.url, status, err.toString());
@@ -74,45 +80,51 @@ class Map extends Component {
     const {markers} = this.state
      return (
       <div>
-      <GoogleMapLoader
-        query={{ libraries: "geometry,drawing,places,visualization" }}
-        containerElement={
-          <div 
-            {...this.props}
-            style={{
-              height: `600px`
-            }}
-          />
-        }
-        googleMapElement={
-          <GoogleMap
-            ref={(map) => console.log(map)}
-            defaultZoom={12}
-            defaultCenter={{ lat: 51.511507, lng:-0.115705}}
-          >
-            {markers.map((marker, index) => {
-              const ref = index;
-              const onClick = () => this.handleMarkerClick(marker);
-              return (
-              
-                <Marker
-                  icon={marker.showInfo ? '/assets/blue-pushpin.png' : null}
-                  title={marker.title}
-                  key={index}
-                  position={marker.position}
-                  onClick={onClick}
+      {!this.state.cms 
+        && <GoogleMapLoader
+              query={{ libraries: "geometry,drawing,places,visualization" }}
+              containerElement={
+                <div 
+                  {...this.props}
+                  style={{
+                    height: `600px`
+                  }}
+                />
+              }
+              googleMapElement={
+                <GoogleMap
+                  ref={(map) => console.log(map)}
+                  defaultZoom={12}
+                  defaultCenter={{ lat: 51.511507, lng:-0.115705}}
                 >
-                  {marker.showInfo ? this.renderInfoWindow(ref, marker) : null}
-                  </Marker>
-              )
-            }
-            )}
-          </GoogleMap>
-         }
-     
-      />
-      <CMS markers={this.state.markers}/>
-      </div>
+                  {markers.map((marker, index) => {
+                    const ref = index;
+                    const onClick = () => this.handleMarkerClick(marker);
+                    return (
+                    
+                      <Marker
+                        icon={marker.showInfo ? '/assets/blue-pushpin.png' : null}
+                        title={marker.title}
+                        key={index}
+                        position={ 
+                          { lat: Number(marker['x-cord']), 
+                            lng: Number(marker['y-cord'])
+                          }
+                        }
+                        onClick={onClick}
+                      >
+                        {marker.showInfo ? this.renderInfoWindow(ref, marker) : null}
+                        </Marker>
+                      ) 
+                    }
+                  )}
+                <button className='toggle-cms' onClick={this.toggleCMS}>Add a spot on the map!</button>
+                </GoogleMap>
+              }
+            />
+        }
+      {this.state.cms && <CMS markers={this.state.markers}/> }
+    </div>
     );
   }
 }

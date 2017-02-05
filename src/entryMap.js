@@ -4,36 +4,36 @@ import { default as _ } from "lodash";
 import './App.css';
 import $ from 'jquery';
 
-//import $ from 'jquery';
 
 
 class EntryMap extends Component {
-  state = {
-    lat: "",
-    lng: "",
-    title: "",
-    desc: ""
+  constructor(props){
+    super(props)
+    this.state = {
+      lat: "",
+      lng: "",
+      title: "",
+      info: ""
+    }
   }
   handleSubmit = (e) => {
-    let markers = this.props.markers;
-    console.log(markers)
-    markers.push(
+    e.preventDefault();
+    //let markers = this.props.markers;
+    // console.log(markers)
+    let data = 
       {
-       "position": {
-         "lat": this.state.lat, 
-         "lng": this.state.lng
-       },
+       "x-cord": this.state.lat, 
+       "y-cord": this.state.lng,
        "key": "London", 
        "defaultAnimation": 2,
-       "title": "Test",
-       "info": "TEST!"
+       "title": this.state.title,
+       "info": this.state.info
      }
-    )
     $.ajax({
-        url: "assets/",
+        url: "http://www.ggalliani.com/projects/llm/api.php/map",
         method: "POST",
-        data: markers,
         dataType: 'json',
+        data: data,
         success: (data) => {
         console.log(data)
         },
@@ -49,8 +49,10 @@ class EntryMap extends Component {
       })
     }
   handleChange = (e) => {
+    let name = e.target.name
+    let value = e.target.value
       this.setState({
-
+        [name] : value
       })
     }
   render() {
@@ -101,9 +103,9 @@ class EntryMap extends Component {
     <form onSubmit={this.handleSubmit}>
     <input type="text" className="lat" value={this.state.lat} />
     <input type="text" className="lng" value={this.state.lng} />
-    <input type="text" onChange={this.handleChange} className="title" />
+    <input type="text" name='title' onChange={this.handleChange} className="title" value={this.state.title}/>
+    <textarea value={this.state.desc} name='info' onChange={this.handleChange}></textarea>
     <input type="submit" className="submit" />
-    <textarea onChange={this.handleChange}></textarea>
     </form>
     </div> 
     );
