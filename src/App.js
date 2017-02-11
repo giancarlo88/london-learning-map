@@ -50,8 +50,11 @@ class Map extends Component {
     })
   }
   componentDidMount(){
-    $.ajax({
-        url: "http://www.ggalliani.com/projects/llm/api.php/map?transform=1",
+    this.getSavedPointers()
+  }
+  getSavedPointers = () => {
+      $.ajax({
+        url: "api.php/map?transform=1",
         method: "GET",
         dataType: 'json',
         success: function(data) {
@@ -64,7 +67,6 @@ class Map extends Component {
   }
   renderInfoWindow(ref, marker) {
     const onCloseclick = this.handleMarkerClose.bind(this, marker);
-    console.log(ref)
     return (
       <Info
         title={this.state.markers[ref].title}
@@ -88,7 +90,7 @@ class Map extends Component {
                   {...this.props}
                   style={{
                     height: `100vh`,
-                    width: `100 vw`
+                    width: `100vw`
                   }}
                 />
               }
@@ -104,7 +106,8 @@ class Map extends Component {
                     return (
                     
                       <Marker
-                        icon={marker.showInfo ? './assets/blue-pushpin.png' : null}
+
+                        icon={marker.showInfo ? 'assets/blue-pushpin.png' : null}
                         title={marker.title}
                         key={index}
                         position={ 
@@ -119,12 +122,12 @@ class Map extends Component {
                       ) 
                     }
                   )}
-                <button className='toggle-cms' onClick={this.toggleCMS}>Add a location...</button>
                 </GoogleMap>
               }
             />
         }
-      {this.state.cms && <CMS toggleCMS={this.toggleCMS} markers={this.state.markers}/> }
+      {!this.state.cms && <button className='toggle-cms' onClick={this.toggleCMS}>Add a location...</button>}
+      {this.state.cms && <CMS toggleCMS={this.toggleCMS} markers={this.state.markers} getSavedPointers={this.getSavedPointers}/> }
     </div>
     );
   }

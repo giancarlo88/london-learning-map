@@ -9,14 +9,27 @@ class CMS extends Component {
         super(props)
         this.state={
           authorized: false,
-          markers: this.props.markers
+          markers: this.props.markers,
+          success: false
         }
+    }
+    toggleSuccess = () => {
+        this.setState({
+            success: !this.state.success
+        })
+        setTimeout(() => this.setState({success: !this.state.success}), 1200)
     }
     render() {
         return (
         <div>
-          <EntryMap markers={this.props.markers} handleMapClick={this.handleMapClick}/>
-          <button className='toggle-cms' onClick={this.props.toggleCMS}>Back to the map!</button>
+          <EntryMap 
+            markers={this.props.markers}
+            handleMapClick={this.handleMapClick}
+            getSavedPointers={this.props.getSavedPointers}
+            toggleSuccess={this.toggleSuccess}
+          />
+          <button className='toggle-cms' onClick={this.props.toggleCMS}>Take me back!</button>
+          {this.state.success && <div>Submission successful!</div>}
         </div>
         )
     }

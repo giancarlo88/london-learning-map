@@ -23,7 +23,7 @@ class EntryMap extends Component {
     e.preventDefault();
     this.setState({loading: true})
     this.authenticate()
-    .catch((err)=> console.log(err))
+    .catch((err) => console.log(err))
   }
 
   authenticate = () => {
@@ -33,7 +33,7 @@ class EntryMap extends Component {
     }
 
     return $.ajax({
-        url: "http://www.ggalliani.com/projects/llm/auth/api.php/",
+        url: "auth/api.php/",
         method: "POST",
         data: authentication,
         success: (data) => {
@@ -42,6 +42,7 @@ class EntryMap extends Component {
         },
         error: (xhr, status, err) => {
           console.error(this.props.url, status, err.toString());
+          window.alert(err)
           }
       })
   }
@@ -57,12 +58,19 @@ class EntryMap extends Component {
        "info": this.state.info, 
      }
 
+    this.saveMapPoint(data, auth).then(
+      this.props.getSavedPointers()
+    )
+    .catch((err) => window.alert(err))
+  }
+  saveMapPoint = (data, auth) =>{
      return $.ajax({
-        url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${auth}`,
+        url: `auth/api.php/map?csrf=${auth}`,
         method: "POST",
         dataType: 'json',
         data: data,
         success: (data) => {
+<<<<<<< HEAD
         console.log(data)
         this.setState({
           loading: false,
@@ -72,6 +80,10 @@ class EntryMap extends Component {
           info: ""
         });
         document.getElementsByClassName('submission-form')[0].reset()
+=======
+        this.props.toggleSuccess()
+        document.querySelector('.submission-form').reset()
+>>>>>>> 4d1e7de85772c9ecc0f3f8d04702fd24d04866ee
         },
         error: (xhr, status, err) => {
           console.error(this.props.url, status, err.toString());
@@ -107,7 +119,6 @@ class EntryMap extends Component {
         query={{ libraries: "geometry,drawing,places,visualization" }}
         containerElement={
           <div 
-            {...this.props}
             style={{
               height: `300px`,
               width: `100%`
