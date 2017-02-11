@@ -22,7 +22,7 @@ class EntryMap extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.authenticate()
-    .catch((err)=> console.log(err))
+    .catch((err) => console.log(err))
   }
 
   authenticate = () => {
@@ -32,7 +32,7 @@ class EntryMap extends Component {
     }
 
     return $.ajax({
-        url: "http://www.ggalliani.com/projects/llm/auth/api.php/",
+        url: "auth/api.php/",
         method: "POST",
         data: authentication,
         success: (data) => {
@@ -41,6 +41,7 @@ class EntryMap extends Component {
         },
         error: (xhr, status, err) => {
           console.error(this.props.url, status, err.toString());
+          window.alert(err)
           }
       })
   }
@@ -56,13 +57,20 @@ class EntryMap extends Component {
        "info": this.state.info, 
      }
 
+    this.saveMapPoint(data, auth).then(
+      this.props.getSavedPointers()
+    )
+    .catch((err) => window.alert(err))
+  }
+  saveMapPoint = (data, auth) =>{
      return $.ajax({
-        url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${auth}`,
+        url: `auth/api.php/map?csrf=${auth}`,
         method: "POST",
         dataType: 'json',
         data: data,
         success: (data) => {
-        console.log(data)
+        this.props.toggleSuccess()
+        document.querySelector('.submission-form').reset()
         },
         error: (xhr, status, err) => {
           console.error(this.props.url, status, err.toString());
@@ -95,7 +103,6 @@ class EntryMap extends Component {
         query={{ libraries: "geometry,drawing,places,visualization" }}
         containerElement={
           <div 
-            {...this.props}
             style={{
               height: `300px`,
               width: `100%`

@@ -6,7 +6,7 @@ class Info extends Component {
     }
     render() {
         return <div className="infoWindow">
-                <span className="close" onClick={this.props.onCloseclick}>X</span>
+                <span className="close" onClick={this.props.onCloseclick}>&times;</span>
                 <h1>{this.props.title}</h1>
                 <p>{this.props.info}</p>
                 </div>
