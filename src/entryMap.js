@@ -16,16 +16,21 @@ class EntryMap extends Component {
       username: "", 
       password: "", 
       markers: [], 
-      loading: false
+      csrf:"", 
+      authenticated: false, 
+      loading: false, 
     }
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({loading: true})
-    this.authenticate()
-    .catch((err) => console.log(err))
+    //this.setState({loading: true})
+    if (!this.state.authenticated){
+      this.authenticate()
+      .catch((err)=> console.log(err))
+    } else {
+      this.logMapPoint(this.state.csrf)
+    }
   }
-
   authenticate = () => {
     let authentication = {
       "username": this.state.username, 
@@ -33,21 +38,27 @@ class EntryMap extends Component {
     }
 
     return $.ajax({
-        url: "auth/api.php/",
+        url: "http://www.ggalliani.com/projects/llm/auth/api.php",
         method: "POST",
         data: authentication,
-        success: (data) => {
-          console.log(data)
-          return this.logMapPoint(data)
+        success: (csrf) => {
+
+          $.ajax({
+          url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${csrf}`,
+          method: "GET",
+          success: () => {
+          this.setState({
+            'csrf': csrf,
+            'authenticated': true})
+          }
+        })
         },
         error: (xhr, status, err) => {
-          console.error(this.props.url, status, err.toString());
-          window.alert(err)
+          console.error(status, err.toString());
           }
       })
   }
   logMapPoint = (auth) => {
-    console.log(auth)
     let data = 
       {
        "x-cord": this.state.lat, 
@@ -55,22 +66,15 @@ class EntryMap extends Component {
        "key": "London", 
        "defaultAnimation": 2,
        "title": this.state.title,
-       "info": this.state.info, 
+       "info": this.state.info,
      }
 
-    this.saveMapPoint(data, auth).then(
-      this.props.getSavedPointers()
-    )
-    .catch((err) => window.alert(err))
-  }
-  saveMapPoint = (data, auth) =>{
      return $.ajax({
-        url: `auth/api.php/map?csrf=${auth}`,
+        url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${auth}`,
         method: "POST",
         dataType: 'json',
         data: data,
         success: (data) => {
-<<<<<<< HEAD
         console.log(data)
         this.setState({
           loading: false,
@@ -80,17 +84,13 @@ class EntryMap extends Component {
           info: ""
         });
         document.getElementsByClassName('submission-form')[0].reset()
-=======
-        this.props.toggleSuccess()
-        document.querySelector('.submission-form').reset()
->>>>>>> 4d1e7de85772c9ecc0f3f8d04702fd24d04866ee
         },
         error: (xhr, status, err) => {
           console.error(this.props.url, status, err.toString());
           this.setState ({ 
             loading: false
           })
-          }
+        }
       })
   }
   handleMapClick = (e) => {
@@ -119,6 +119,7 @@ class EntryMap extends Component {
         query={{ libraries: "geometry,drawing,places,visualization" }}
         containerElement={
           <div 
+            {...this.props}
             style={{
               height: `300px`,
               width: `100%`
@@ -152,16 +153,26 @@ class EntryMap extends Component {
      
       />
     <form className="submission-form" onSubmit={this.handleSubmit}>
+      {this.state.authenticated && 
+        <div>
       {this.state.lat && this.state.lng && 
         <div className="coords">{this.state.lat}, {this.state.lng}</div>
       }
+      
       <input type="hidden" className="lat" value={this.state.lat} />
       <input type="hidden" className="lng" value={this.state.lng} />
       <input type="text" name='title' placeholder="Location Name" onChange={this.handleChange} className="title" value={this.state.title} disabled={this.state.loading}/>
       <textarea value={this.state.desc} placeholder="Enter a description..." name='info' onChange={this.handleChange} disabled={this.state.loading}></textarea>
+      <input type="submit" className="submit" value={this.state.loading ? 'Adding...' : 'Add Location'} disabled={this.state.loading} />
+      </div>
+      }
+      {!this.state.authenticated && 
+        <div>
       <input type='text' name='username' placeholder='username' onChange={this.handleChange} disabled={this.state.loading}/>
       <input type='password' name='password' placeholder='password' onChange={this.handleChange}disabled={this.state.loading}/>
-      <input type="submit" className="submit" value={this.state.loading ? 'Adding...' : 'Add Location'} disabled={this.state.loading} />
+      <input type="submit" className="submit" value={this.state.loading ? 'Adding...' : 'Login'} disabled={this.state.loading} />
+        </div>
+      }
     </form>
     </div> 
     );

@@ -31,7 +31,7 @@ body {
 }
 }
 
-.submission-form {
+.submission-form div {
   display: flex;
   flex-direction: column;
   max-width: 500px;
