@@ -38,6 +38,10 @@ textarea {
   box-shadow: 5px 5px 20px #888888;
 }
 
+textarea { 
+  height: 100px;
+}
+
 .coords {
   margin: 10px;
 }

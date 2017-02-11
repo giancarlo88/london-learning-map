@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleMap, GoogleMapLoader, Marker } from "react-google-maps";
 import { default as _ } from "lodash";
-import './App.css';
 import $ from 'jquery';
 
 
@@ -16,11 +15,13 @@ class EntryMap extends Component {
       info: "", 
       username: "", 
       password: "", 
-      markers: []
+      markers: [], 
+      loading: false
     }
   }
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({loading: true})
     this.authenticate()
     .catch((err)=> console.log(err))
   }
@@ -63,9 +64,20 @@ class EntryMap extends Component {
         data: data,
         success: (data) => {
         console.log(data)
+        this.setState({
+          loading: false,
+          lat: "",
+          lng: "",
+          title: "",
+          info: ""
+        });
+        document.getElementsByClassName('submission-form')[0].reset()
         },
         error: (xhr, status, err) => {
           console.error(this.props.url, status, err.toString());
+          this.setState ({ 
+            loading: false
+          })
           }
       })
   }
@@ -134,11 +146,11 @@ class EntryMap extends Component {
       }
       <input type="hidden" className="lat" value={this.state.lat} />
       <input type="hidden" className="lng" value={this.state.lng} />
-      <input type="text" name='title' placeholder="Location Name" onChange={this.handleChange} className="title" value={this.state.title}/>
-      <textarea value={this.state.desc} placeholder="Enter a description..." name='info' onChange={this.handleChange}></textarea>
-      <input type='text' name='username' placeholder='username' onChange={this.handleChange}/>
-      <input type='password' name='password' placeholder='password' onChange={this.handleChange}/>
-      <input type="submit" className="submit" />
+      <input type="text" name='title' placeholder="Location Name" onChange={this.handleChange} className="title" value={this.state.title} disabled={this.state.loading}/>
+      <textarea value={this.state.desc} placeholder="Enter a description..." name='info' onChange={this.handleChange} disabled={this.state.loading}></textarea>
+      <input type='text' name='username' placeholder='username' onChange={this.handleChange} disabled={this.state.loading}/>
+      <input type='password' name='password' placeholder='password' onChange={this.handleChange}disabled={this.state.loading}/>
+      <input type="submit" className="submit" value={this.state.loading ? 'Adding...' : 'Add Location'} disabled={this.state.loading} />
     </form>
     </div> 
     );

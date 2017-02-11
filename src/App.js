@@ -3,7 +3,7 @@ import { GoogleMap, GoogleMapLoader, Marker } from "react-google-maps";
 import { default as _ } from "lodash";
 import './App.css';
 import Info from './info.js';
-import CMS from './cms.js';
+import CMS from './CMS';
 import $ from 'jquery';
 
 
@@ -104,7 +104,7 @@ class Map extends Component {
                     return (
                     
                       <Marker
-                        icon={marker.showInfo ? '/assets/blue-pushpin.png' : null}
+                        icon={marker.showInfo ? './assets/blue-pushpin.png' : null}
                         title={marker.title}
                         key={index}
                         position={ 

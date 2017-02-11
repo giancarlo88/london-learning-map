@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { default as _ } from "lodash";
 import './App.css';
-import EntryMap from './entryMap.js';
+import EntryMap from './EntryMap';
 
 
-class cms extends Component {
+class CMS extends Component {
     constructor(props){
         super(props)
         this.state={
@@ -21,4 +21,4 @@ class cms extends Component {
         )
     }
 }
-export default cms;
+export default CMS;
