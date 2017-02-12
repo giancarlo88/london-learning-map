@@ -3,8 +3,6 @@ import { GoogleMap, GoogleMapLoader, Marker } from "react-google-maps";
 import { default as _ } from "lodash";
 import $ from 'jquery';
 
-
-
 class EntryMap extends Component {
   constructor(props){
     super(props)
@@ -21,43 +19,47 @@ class EntryMap extends Component {
       loading: false, 
     }
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     //this.setState({loading: true})
     if (!this.state.authenticated){
-      this.authenticate()
-      .catch((err)=> console.log(err))
+      this.getCSRF()
     } else {
       this.logMapPoint(this.state.csrf)
     }
   }
-  authenticate = () => {
+
+  getCSRF = () => {
     let authentication = {
       "username": this.state.username, 
       "password": this.state.password
     }
-
     return $.ajax({
-        url: "http://www.ggalliani.com/projects/llm/auth/api.php",
-        method: "POST",
-        data: authentication,
-        success: (csrf) => {
-
-          $.ajax({
-          url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${csrf}`,
-          method: "GET",
-          success: () => {
-          this.setState({
-            'csrf': csrf,
-            'authenticated': true})
-          }
-        })
-        },
-        error: (xhr, status, err) => {
-          console.error(status, err.toString());
-          }
-      })
+      url: "http://www.ggalliani.com/projects/llm/auth/api.php",
+      method: "POST",
+      data: authentication,
+      success: (csrf) => {
+        return this.submitCSRF(csrf)
+      }
+    })
   }
+
+  submitCSRF = (csrf) => {
+    return $.ajax({
+      url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${csrf}`,
+      method: 'GET',
+      success: () => {
+        return this.setState({
+          'authenticated': true
+        })
+      }, 
+      error: () => {
+        window.alert('Sorry, your login details were incorrect.')
+      }
+    })
+  }
+
   logMapPoint = (auth) => {
     let data = 
       {
@@ -93,6 +95,7 @@ class EntryMap extends Component {
         }
       })
   }
+
   handleMapClick = (e) => {
     let marker = {
       lat: e.latLng.lat(),
@@ -103,23 +106,25 @@ class EntryMap extends Component {
           ...marker, 
           markers: markerArray
       })
-    }
+  }
+
   handleChange = (e) => {
     let name = e.target.name
     let value = e.target.value
       this.setState({
         [name] : value
       })
-    }
+  }
+
   render() {
     const {markers} = this.state
      return (    
       <div>
       <GoogleMapLoader
-        query={{ libraries: "geometry,drawing,places,visualization" }}
+        query={{ libraries: "geometry,drawing,places,visualization,search" }}
+        {...this.props}
         containerElement={
           <div 
-            {...this.props}
             style={{
               height: `300px`,
               width: `100%`

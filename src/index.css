@@ -1,35 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: 'lato', Helvetica, sans-serif;
 }
 
 
-.infoWindow {
+.info-window {
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 5px 5px 20px #888888;
   min-height: 400px;
   padding: 20px;
   position: fixed;
   right: 20px;
-  top: 20px;
+  top: 60px;
   transition: all .5s ease-in-out;
   width: 25vw;
   z-index: 2;
 }
 
+@media (max-width: 768px){
+  .info-window {
+    width: 50%;
+  }
+}
+
 @media (max-width: 480px) { 
-  .infoWindow {
-  min-height: 100px;
-  padding: 20px;
-  position: fixed;
+  .info-window {
+    min-height: 100px;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 40%;
+    transition: all .5s ease-in-out;
+    width: auto;
+    z-index: 2;
+  }
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+.error { 
+  top: 0;
   left: 0;
-  top: 40%;
-  transition: all .5s ease-in-out;
-  width: auto;
-  z-index: 2;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
 }
+
+.error div {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 5px 5px 20px #888888;
+  height: auto;
+  width: 80%;
+  padding: 20px;
 }
+
+
+
 
 .submission-form div {
   display: flex;
@@ -43,7 +80,7 @@ input[type='password'],
 textarea {
   margin: 5px;
   font-size: 16px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'lato', Helvetica, sans-serif;
   border: 0;
   background: #eee;
   padding: 5px;
@@ -55,7 +92,6 @@ textarea {
 textarea { 
   height: 100px;
 }
-
 
 .coords {
   margin: 10px;
@@ -75,7 +111,7 @@ textarea {
   width: 50%;
   margin: 0 auto;
   -webkit-appearance: none;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'lato', Helvetica, sans-serif;
 }
 
 .toggle-cms {
@@ -93,8 +129,13 @@ textarea {
   background: #2C81BA;
   transition: all .3s ease;
   color: #fff;
-  font-family: "News Gothic", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  font-family: 'lato', Helvetica, sans-serif;
+}
 
+.toggle-cms:disabled, 
+.submit:disabled {
+  cursor: not-allowed; 
+  color: #CCC;
 }
 
 .toggle-cms:hover {
