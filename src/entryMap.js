@@ -40,6 +40,9 @@ class EntryMap extends Component {
       method: "POST",
       data: authentication,
       success: (csrf) => {
+        this.setState({
+          'csrf': csrf
+        })
         return this.submitCSRF(csrf)
       }
     })
@@ -50,8 +53,9 @@ class EntryMap extends Component {
       url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${csrf}`,
       method: 'GET',
       success: () => {
+        console.log(csrf)
         return this.setState({
-          'authenticated': true
+          'authenticated': true,
         })
       }, 
       error: () => {
