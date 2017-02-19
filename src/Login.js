@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Transition from './TransitionContainer'
 
 class Login extends Component {
   constructor(props){
@@ -25,11 +26,13 @@ class Login extends Component {
   }
   render () {
     return (
-    <form onSubmit={this.handleSubmit}>
-      <input type='text' name='username' placeholder='username' onChange={this.handleChange}/>
-      <input type='password' name='password' placeholder='password' onChange={this.handleChange}/>
-      <input type='submit' label='login'/>
-    </form>
+    <Transition>
+      <form onSubmit={this.handleSubmit}>
+        <input type='text' name='username' placeholder='username' onChange={this.handleChange}/>
+        <input type='password' name='password' placeholder='password' onChange={this.handleChange}/>
+        <input type='submit' label='login'/>
+      </form>
+    </Transition>
     )
   }
 }
