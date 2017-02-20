@@ -5,7 +5,7 @@ import Map from './Map'
 const App = props => {
   return (
     <Transition>
-      <Map key={1}/>
+      <Map />
     </Transition>
   )
 }

@@ -23,7 +23,7 @@ class EntryMap extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    //this.setState({loading: true})
+    this.setState({loading: true})
     if (!this.state.authenticated){
       this.getCSRF()
     } else {
@@ -33,8 +33,8 @@ class EntryMap extends Component {
 
   getCSRF = () => {
     let authentication = {
-      "username": this.state.username, 
-      "password": this.state.password
+      username: this.state.username, 
+      password: this.state.password
     }
     return $.ajax({
       url: "http://www.ggalliani.com/projects/llm/auth/api.php",
@@ -42,10 +42,14 @@ class EntryMap extends Component {
       data: authentication,
       success: (csrf) => {
         this.setState({
-          'csrf': csrf
+          csrf: csrf
         })
         return this.submitCSRF(csrf)
-      }
+      }, 
+      error: () => {
+        window.alert('Sorry, there appears to be an error connecting with the server. :(')
+        this.setState({loading: false})
+      } 
     })
   }
 
@@ -54,13 +58,16 @@ class EntryMap extends Component {
       url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${csrf}`,
       method: 'GET',
       success: () => {
-        console.log(csrf)
         return this.setState({
-          'authenticated': true,
+          authenticated: true,
+          loading: false
         })
       }, 
       error: () => {
         window.alert('Sorry, your login details were incorrect.')
+        this.setState({
+          loading: false
+        })
       }
     })
   }
@@ -68,23 +75,19 @@ class EntryMap extends Component {
   logMapPoint = (auth) => {
     let data = 
       {
-       "x-cord": this.state.lat, 
-       "y-cord": this.state.lng,
-       "key": "London", 
-       "defaultAnimation": 2,
-       "title": this.state.title,
-       "info": this.state.info,
+       'x-cord': this.state.lat, 
+       'y-cord': this.state.lng,
+       key: "London", 
+       defaultAnimation: 2,
+       title: this.state.title,
+       info: this.state.info,
      }
-     this.setState({
-       loading: true
-     })
      return $.ajax({
         url: `http://www.ggalliani.com/projects/llm/auth/api.php/map?csrf=${auth}`,
         method: "POST",
         dataType: 'json',
         data: data,
         success: (data) => {
-          console.log(data)
           this.setState({
             loading: false,
             lat: "",
@@ -142,7 +145,6 @@ class EntryMap extends Component {
           }
           googleMapElement={
             <GoogleMap
-              ref={(map) => console.log(map)}
               defaultZoom={12}
               defaultCenter={{ lat: 51.511507, lng:-0.115705}}
               onClick={this.handleMapClick}

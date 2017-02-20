@@ -16,7 +16,7 @@ class CMS extends Component {
         this.setState({
             success: !this.state.success
         })
-        setTimeout(() => this.setState({success: !this.state.success}), 1200)
+        setTimeout(() => this.setState({success: !this.state.success}), 3000)
     }
     render() {
         return (
@@ -28,7 +28,7 @@ class CMS extends Component {
             toggleSuccess={this.toggleSuccess}
           />
           <button className='toggle-cms' onClick={this.props.toggleCMS}>Take me back!</button>
-          {this.state.success && <div>Submission successful!</div>}
+          {this.state.success && <Transition><div className='success-message'>Submission successful!</div></Transition>}
         </Transition>
         )
     }

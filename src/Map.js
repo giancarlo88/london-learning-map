@@ -19,11 +19,12 @@ class Map extends Component {
 
   componentDidMount(){
     this.getSavedPointers()
+    console.log('A project by Giancarlo Galliani :)')
   }
 
   getSavedPointers = () => {
     $.ajax({
-      url: "api.php/map?transform=1",
+      url: "http://www.ggalliani.com/projects/llm/api.php/map?transform=1",
       method: "GET",
       dataType: 'json',
       success: (data) => {
@@ -80,15 +81,14 @@ class Map extends Component {
 
   renderInfoWindow(ref, marker) {
     const onCloseclick = this.handleMarkerClose.bind(this, marker);
+    let info = this.state.markers[ref].info.replace(/\r?\n/g,'<br/>')
     return (
       <Info
         title={this.state.markers[ref].title}
-        info={this.state.markers[ref].info}
+        info={info}
         key={`${ref}_info_window`}
         onCloseclick={onCloseclick}
-      >
-        {this.state.markers[ref].info}
-      </Info>
+      />
       )
   }
 
@@ -102,9 +102,13 @@ class Map extends Component {
               containerElement={ <div {...this.props} style={{height: `100vh`, width: `100vw`}} />}
               googleMapElement={
                 <GoogleMap
-                  ref={(map) => console.log(map)}
-                  defaultZoom={12}
-                  defaultCenter={{ lat: 51.511507, lng:-0.115705}}
+                  defaultZoom={13}
+                  defaultCenter={{ lat: 51.5199975, lng:-0.1003068}}
+                  options={{
+                    scaleControl: true,
+                    tiltControl: true,
+                    tilt: 45
+                  }}
                 >
                   {markers.map((marker, index) => {
                     const ref = index;
