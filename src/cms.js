@@ -21,7 +21,7 @@ class CMS extends Component {
     render() {
         return (
         <Transition>
-          <EntryMap 
+          <EntryMap
             markers={this.props.markers}
             handleMapClick={this.handleMapClick}
             getSavedPointers={this.props.getSavedPointers}

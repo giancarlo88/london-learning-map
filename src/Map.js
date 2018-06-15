@@ -4,15 +4,15 @@ import { default as _ } from "lodash"
 import './App.css'
 import Info from './info'
 import CMS from './CMS'
-import $ from 'jquery'
+// import $ from 'jquery'
 import Transition from './TransitionContainer'
 
 class Map extends Component {
   constructor(){
     super()
     this.state = {
-      markers: [], 
-      cms: false, 
+      markers: [],
+      cms: false,
       error: false
     }
   }
@@ -23,18 +23,17 @@ class Map extends Component {
   }
 
   getSavedPointers = () => {
-    $.ajax({
-      url: "http://www.ggalliani.com/projects/llm/api.php/map?transform=1",
-      method: "GET",
-      dataType: 'json',
-      success: (data) => {
-        this.setState({markers: data.map})
-        },
-      error: (xhr, status, err) => {
-        console.error(this.props.url, status, err.toString());
-        this.setState({error: true})
-      }
-    })
+    fetch('http://llm-server-dev.eu-west-1.elasticbeanstalk.com/locations')
+      .then((data) => data.json())
+      .then((data) => this.setState({
+        markers: data
+      }))
+      .catch((err) => {
+        this.setState({
+          error: true
+        })
+        throw new Error(err)
+      })
   }
 
   handleMarkerClick (targetMarker) {
@@ -74,7 +73,7 @@ class Map extends Component {
   }
 
   toggleCMS = () => {
-    this.setState({ 
+    this.setState({
       cms: !this.state.cms
     })
   }
@@ -118,15 +117,15 @@ class Map extends Component {
                         icon={marker.showInfo ? 'assets/blue-pushpin.png' : null}
                         title={marker.title}
                         key={index}
-                        position={{ 
-                          lat: Number(marker['x-cord']), 
+                        position={{
+                          lat: Number(marker['x-cord']),
                           lng: Number(marker['y-cord'])
                         }}
                         onClick={onClick}
                       >
                         {marker.showInfo ? this.renderInfoWindow(ref, marker) : null}
                       </Marker>
-                    ) 
+                    )
                   }
                 )}
               </GoogleMap>
@@ -134,15 +133,15 @@ class Map extends Component {
         />
       }
 
-      {!this.state.cms && 
+      {!this.state.cms &&
         <Transition>
           <button className='toggle-cms' disabled={this.state.error} onClick={this.toggleCMS}>Add a location...</button>
         </Transition>
       }
 
-      {this.state.cms && 
+      {this.state.cms &&
         <CMS toggleCMS={this.toggleCMS} markers={this.state.markers} getSavedPointers={this.getSavedPointers}/>
-      
+
       }
 
       {this.state.error &&
