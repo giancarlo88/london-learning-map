@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Map } from '../../Components/Map/Map'
+import Map from '../../Components/Map/Map'
 import { get } from '../../Services/api'
 
 export default class MapContainer extends Component {

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MapContainer @renders should match a snapshot 1`] = `
-<Map
+<MapComponent
   data={Array []}
 />
 `;
