@@ -3,5 +3,6 @@
 exports[`MapContainer @renders should match a snapshot 1`] = `
 <MapComponent
   data={Array []}
+  handleClick={[Function]}
 />
 `;

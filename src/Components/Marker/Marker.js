@@ -10,7 +10,7 @@ const StyledMarker = styled.div`
 `
 
 const Marker = ({ lat, lng, index, handleClick }) => (
-  <StyledMarker lat={lat} lng={lng} index={index} onClick={handleClick}/>
+  <StyledMarker lat={lat} lng={lng} index={index} onClick={() => handleClick(index)}/>
 )
 
 Marker.propTypes = { 

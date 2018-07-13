@@ -6,8 +6,16 @@ export default class MapContainer extends Component {
   constructor() {
     super()
     this.state = {
-      data: []
+      data: [], 
+      selectedMarker: null
     }
+  }
+
+  handleMarkerClick = (index) => {
+    const { selectedMarker } = this.state
+    this.setState({ 
+      selectedMarker: index === selectedMarker ? null : index 
+    })
   }
 
   async componentDidMount() {
@@ -20,6 +28,6 @@ export default class MapContainer extends Component {
   }
 
   render() {
-    return <Map data={this.state.data} />
+    return <Map data={this.state.data} handleClick={this.handleMarkerClick}/>
   }
 }
