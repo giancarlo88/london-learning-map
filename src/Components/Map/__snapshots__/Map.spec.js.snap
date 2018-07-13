@@ -33,6 +33,14 @@ exports[`MapComponent @renders should render 1`] = `
       }
     }
     yesIWantToUseGoogleMapApiInternals={false}
-  />
+  >
+    <Marker
+      handleClick={[Function]}
+      index={1}
+      key="1"
+      lat={1234}
+      lng={2345}
+    />
+  </GoogleMap>
 </styled.div>
 `;

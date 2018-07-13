@@ -2,6 +2,9 @@
 
 exports[`DescriptionBox @renders should render 1`] = `
 <styled.div>
-  here is a description
+  <h1 />
+  <p>
+    here is a description
+  </p>
 </styled.div>
 `;

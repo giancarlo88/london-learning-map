@@ -24,9 +24,10 @@ const StyledDescriptionBox = styled.div`
   }
 `
 
-const DescriptionBox = ({description}) => (
+const DescriptionBox = ({description, title}) => (
   <StyledDescriptionBox>
-    {description}
+    <h1>{title}</h1>
+    <p>{description}</p>
   </StyledDescriptionBox>
 )
 
