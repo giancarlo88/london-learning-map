@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledMarker = styled.div`
-  background-color: red;
-  height: 50px;
-  width: 10px;
+  background-image: url(/marker.svg);
+  background-size: cover;
+  height: 30px;
+  width: 20px;
 `
 
 const Marker = ({ lat, lng, index }) => (
