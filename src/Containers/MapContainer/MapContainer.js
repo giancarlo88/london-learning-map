@@ -28,6 +28,7 @@ export default class MapContainer extends Component {
   }
 
   render() {
-    return <Map data={this.state.data} handleClick={this.handleMarkerClick}/>
+    const { selectedMarker } = this.state
+    return <Map data={this.state.data} handleClick={this.handleMarkerClick} selectedMarker={selectedMarker}/>
   }
 }

@@ -50,6 +50,6 @@ describe(MapContainer.name, () => {
         wrapper.instance().handleMarkerClick(index)
         expect(wrapper.state().selectedMarker).toBe(index)
       })
-    });
+    })
   })
 })
