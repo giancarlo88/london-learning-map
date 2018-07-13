@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Map from '../../Components/Map/Map'
+import MapComponent from '../../Components/Map/Map'
 import { get } from '../../Services/api'
 
 export default class MapContainer extends Component {
@@ -29,6 +29,6 @@ export default class MapContainer extends Component {
 
   render() {
     const { selectedMarker } = this.state
-    return <Map data={this.state.data} handleClick={this.handleMarkerClick} selectedMarker={selectedMarker}/>
+    return <MapComponent data={this.state.data} handleClick={this.handleMarkerClick} selectedMarker={selectedMarker}/>
   }
 }

@@ -34,7 +34,7 @@ const MapComponent = ({ data, handleClick, selectedMarker }) => (
 MapComponent.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string,
+      _id: PropTypes.number,
       'x-cord': PropTypes.number,
       'y-cord': PropTypes.number,
       index: PropTypes.number,
@@ -45,7 +45,7 @@ MapComponent.propTypes = {
     })
   ).isRequired, 
   handleClick: PropTypes.func.isRequired,
-  selectedMarker: PropTypes.oneOfType([PropTypes.number, PropTypes.
+  selectedMarker: PropTypes.number
 }
 
 
