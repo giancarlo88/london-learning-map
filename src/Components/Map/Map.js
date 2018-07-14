@@ -35,7 +35,7 @@ const MapComponent = ({ data = {}, handleClick, selectedMarker }) => {
           )
         })}
       </GoogleMapsReact>
-      {selectedMarker && <DescriptionBox description={info} title={title} />}
+      {selectedMarker && <DescriptionBox description={info} title={title} index={selectedMarker} handleCloseClick={handleClick}/>}
     </StyledMap>
   )
 }

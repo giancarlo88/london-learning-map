@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CloseButton @renders should render 1`] = `
-<button
+<styled.button
   onClick={[Function]}
 >
   ×
-</button>
+</styled.button>
 `;

@@ -25,16 +25,17 @@ const StyledDescriptionBox = styled.div`
   }
 `
 
-const DescriptionBox = ({description, title}) => (
+const DescriptionBox = ({description, title, handleCloseClick, index}) => (
   <StyledDescriptionBox>
-    <CloseButton />
+    <CloseButton handleCloseClick={() => handleCloseClick(index)}/>
     <h1>{title}</h1>
     <p>{description}</p>
   </StyledDescriptionBox>
 )
 
 DescriptionBox.propTypes = { 
-  description: PropTypes.string.isRequired
+  description: PropTypes.string.isRequired,
+  handleCloseClick: PropTypes.func.isRequired
 }
 
 export default DescriptionBox

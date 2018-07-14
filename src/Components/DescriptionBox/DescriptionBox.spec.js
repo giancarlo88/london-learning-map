@@ -6,7 +6,8 @@ import DescriptionBox from './DescriptionBox'
 describe(DescriptionBox.name, () => {
   const description = 'here is a description'
   const props = {
-    description
+    description, 
+    handleCloseClick: () => {}
   }
 
   describe('@renders', () => {

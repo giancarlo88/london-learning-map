@@ -9,7 +9,7 @@ describe(CloseButton.name, () => {
   })
 
   const defaultProps = {
-    handleClick: () => {}
+    handleCloseClick: () => {}
   }
 
   describe('@renders', () => {
@@ -25,7 +25,7 @@ describe(CloseButton.name, () => {
         const handleClickMock = jest.fn()
         const props = { 
           ...defaultProps, 
-          handleClick: handleClickMock
+          handleCloseClick: handleClickMock
         }
         const wrapper = shallow(<CloseButton {...props}/>)
         wrapper.simulate('click')
