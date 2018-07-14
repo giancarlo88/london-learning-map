@@ -30,6 +30,7 @@ const MapComponent = ({ data = {}, handleClick, selectedMarker }) => {
               lat={rest['x-cord']}
               lng={rest['y-cord']}
               handleClick={handleClick}
+              isSelected={index === selectedMarker}
             />
           )
         })}

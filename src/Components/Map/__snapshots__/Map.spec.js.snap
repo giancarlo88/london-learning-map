@@ -37,6 +37,7 @@ exports[`MapComponent @renders should render 1`] = `
     <Marker
       handleClick={[Function]}
       index={1}
+      isSelected={false}
       key="1"
       lat={1234}
       lng={2345}
