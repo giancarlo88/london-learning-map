@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '../../../node_modules/styled-components';
+import CloseButton from '../CloseButton/CloseButton';
 
 
 const StyledDescriptionBox = styled.div`
@@ -26,6 +27,7 @@ const StyledDescriptionBox = styled.div`
 
 const DescriptionBox = ({description, title}) => (
   <StyledDescriptionBox>
+    <CloseButton />
     <h1>{title}</h1>
     <p>{description}</p>
   </StyledDescriptionBox>

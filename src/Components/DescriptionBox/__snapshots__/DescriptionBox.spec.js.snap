@@ -2,6 +2,7 @@
 
 exports[`DescriptionBox @renders should render 1`] = `
 <styled.div>
+  <CloseButton />
   <h1 />
   <p>
     here is a description

@@ -8,7 +8,7 @@ describe(Marker.name, () => {
     jest.clearAllMocks()
   })
 
-  const props = {
+  const defaultProps = {
     lat: 0,
     lng: 0,
     index: 0,
@@ -17,17 +17,21 @@ describe(Marker.name, () => {
 
   describe('@renders', () => {
     it('should render', () => {
-      const wrapper = shallow(<Marker {...props} />)
+      const wrapper = shallow(<Marker {...defaultProps} />)
       expect(wrapper).toMatchSnapshot()
     })
   })
 
   describe('@props', () => {
     it('should fire handleClick prop when clicked', () => {
-      const onClickMock = jest.fn()
-      const wrapper = shallow(<Marker {...props} handleClick={onClickMock} />)
+      const handleClickMock = jest.fn()
+      const props = { 
+        ...defaultProps, 
+        handleClick: handleClickMock
+      }
+      const wrapper = shallow(<Marker {...props}/>)
       wrapper.simulate('click')
-      expect(onClickMock).toHaveBeenCalledTimes(1)
+      expect(handleClickMock).toHaveBeenCalledTimes(1)
     })
   })
 })

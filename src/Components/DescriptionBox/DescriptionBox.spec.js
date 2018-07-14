@@ -19,7 +19,7 @@ describe(DescriptionBox.name, () => {
   describe('@props', () => {
     it('should render prop text as text', () => {
       const wrapper = shallow(<DescriptionBox {...props} />)
-      expect(wrapper.dive().text()).toBe(description)
+      expect(wrapper.dive().find('p').text()).toBe(description)
     })
   })
 })
