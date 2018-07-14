@@ -6,11 +6,12 @@ import CloseButton from '../CloseButton/CloseButton';
 
 const StyledDescriptionBox = styled.div`
   background-color: white;
-  position: fixed;
-  right: 10px; 
-  left: 10px;
   bottom: 10px;
   height: 30vh;
+  left: 10px;
+  position: fixed;
+  padding: 10px;
+  right: 10px; 
 
   @media (min-width: 480px) {
     bottom: initial; 
