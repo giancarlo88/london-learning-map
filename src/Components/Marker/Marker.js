@@ -5,11 +5,12 @@ import PropTypes from 'prop-types'
 const StyledMarker = styled.div`
   background-image: url(/marker.svg);
   background-size: cover;
+  cursor: pointer;
   height: 30px;
-  width: 20px;
   transform: ${props =>
     props.isSelected ? 'scale3d(1.3, 1.3, 1.3)' : 'scale3d(1, 1, 1)'};
   transition: transform 200ms ease-out;
+  width: 20px;
 `
 
 const Marker = ({ lat, lng, index, handleClick, isSelected }) => (

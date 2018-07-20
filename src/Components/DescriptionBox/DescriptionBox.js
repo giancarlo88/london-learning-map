@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '../../../node_modules/styled-components';
-import CloseButton from '../CloseButton/CloseButton';
-
+import styled from '../../../node_modules/styled-components'
+import CloseButton from '../CloseButton/CloseButton'
 
 const StyledDescriptionBox = styled.div`
   background-color: white;
@@ -10,31 +9,39 @@ const StyledDescriptionBox = styled.div`
   height: 30vh;
   left: 10px;
   position: fixed;
-  padding: 10px;
-  right: 10px; 
+  padding: 20px;
+  right: 10px;
 
   @media (min-width: 480px) {
-    bottom: initial; 
+    bottom: initial;
     left: initial;
-    height: 75vh;
+    height: auto;
     top: 10px;
-    width: 45%
+    width: 45%;
+    transition: height 2s ease-out;
   }
 
-  @media (min-width: 768px) { 
+  @media (min-width: 768px) {
     width: 30%;
   }
 `
 
-const DescriptionBox = ({description, title, handleCloseClick, index}) => (
+const Text = styled.p`
+  margin: 0;
+`
+
+const Title = styled.h1`
+  margin-top: 0;
+`
+const DescriptionBox = ({ description, title, handleCloseClick, index }) => (
   <StyledDescriptionBox>
-    <CloseButton handleCloseClick={() => handleCloseClick(index)}/>
-    <h1>{title}</h1>
-    <p>{description}</p>
+    <CloseButton handleCloseClick={() => handleCloseClick(index)} />
+    <Title>{title}</Title>
+    <Text>{description}</Text>
   </StyledDescriptionBox>
 )
 
-DescriptionBox.propTypes = { 
+DescriptionBox.propTypes = {
   description: PropTypes.string.isRequired,
   handleCloseClick: PropTypes.func.isRequired
 }

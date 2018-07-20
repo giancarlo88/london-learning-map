@@ -4,12 +4,12 @@ import styled from 'styled-components'
 const StyledCloseButton = styled.button`
   background-color: transparent;
   border: none;
-  font-size: 2em;
-  float: right;
+  cursor: pointer;
+  font-size: 1.5em;
   outline: none;
-  padding-right: 0; 
-  padding-left: 20px;
-
+  position: absolute;
+  right: 0;
+  top: 0;
 `
 
 const CloseButton = ({ handleCloseClick }) => (
