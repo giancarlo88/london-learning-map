@@ -6,15 +6,15 @@ export default class MapContainer extends Component {
   constructor() {
     super()
     this.state = {
-      data: [], 
+      data: [],
       selectedMarker: null
     }
   }
 
-  handleMarkerClick = (index) => {
+  handleMarkerClick = index => {
     const { selectedMarker } = this.state
-    this.setState({ 
-      selectedMarker: index === selectedMarker ? null : index 
+    this.setState({
+      selectedMarker: index === selectedMarker ? null : index
     })
   }
 
@@ -28,7 +28,12 @@ export default class MapContainer extends Component {
   }
 
   render() {
-    const { selectedMarker } = this.state
-    return <MapComponent data={this.state.data} handleClick={this.handleMarkerClick} selectedMarker={selectedMarker}/>
+    return (
+      <MapComponent
+        data={this.state.data}
+        handleClick={this.handleMarkerClick}
+        {...this.props}
+      />
+    )
   }
 }
