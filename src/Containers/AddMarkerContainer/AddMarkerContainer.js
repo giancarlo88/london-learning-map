@@ -6,9 +6,29 @@ import { post } from '../../Services/api'
 class AddMarkerContainer extends Component {
   constructor() {
     super()
+    const isAuthenticated = document.cookie.includes('connect.sid')
     this.state = {
-      isAuthenticated: false
+      isAuthenticated,
+      xCord: '',
+      yCord: '',
+      title: '',
+      info: ''
     }
+    this.mapRef=React.createRef()
+  }
+
+  componentDidMount() {
+    console.log(this.mapRef)
+    console.log(this.mapRef.current.firstChild)
+  }
+
+  handleChange = e => {
+    const {
+      target: { name, value }
+    } = e
+    this.setState({
+      [name]: value
+    })
   }
 
   handleLogonFormSubmit = async e => {
@@ -18,7 +38,13 @@ class AddMarkerContainer extends Component {
       password: 'asdf1234'
     }
     try {
-      const res = await post(`${process.env.REACT_APP_ENDPOINT_URL}/auth`, body)
+      const res = await post(
+        `${process.env.REACT_APP_ENDPOINT_URL}/auth`,
+        body,
+        {
+          credentials: 'include'
+        }
+      )
       if (res && res.status === 200) {
         this.setState({
           isAuthenticated: true
@@ -29,10 +55,29 @@ class AddMarkerContainer extends Component {
     }
   }
 
+  handleMapClick = e => {
+    const { lat, lng } = e
+    this.setState({
+      xCord: lat,
+      yCord: lng
+    })
+  }
+
+  handleMarkerSubmit = () => {}
+
   render() {
-    const { isAuthenticated } = this.state
+    const { isAuthenticated, xCord, yCord, title, info } = this.state
     return isAuthenticated ? (
-      <AddMarkerForm />
+      <AddMarkerForm
+        xCord={xCord}
+        yCord={yCord}
+        title={title}
+        info={info}
+        handleChange={this.handleChange}
+        handleMapClick={this.handleMapClick}
+        handleSubmit={this.handleMarkerSubmit}
+        mapRef={this.mapRef}
+      />
     ) : (
       <LoginForm handleSubmit={this.handleLogonFormSubmit} />
     )
