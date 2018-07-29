@@ -28,9 +28,11 @@ export default class MapContainer extends Component {
   }
 
   render() {
+    const { selectedMarker } = this.state
     return (
       <MapComponent
         data={this.state.data}
+        selectedMarker={selectedMarker}
         handleClick={this.handleMarkerClick}
         {...this.props}
       />

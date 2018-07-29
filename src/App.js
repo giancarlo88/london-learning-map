@@ -7,16 +7,16 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      isAdminPanelActive: false
+      isAddingMarker: false
     }
   }
 
   toggleAdminPanel = () =>
-    this.setState({ isAdminPanelActive: !this.state.isAdminPanelActive })
+    this.setState({ isAddingMarker: !this.state.isAddingMarker })
 
   render() {
-    const { isAdminPanelActive } = this.state
-    return isAdminPanelActive ? (
+    const { isAddingMarker } = this.state
+    return isAddingMarker ? (
       <AddMarkerContainer toggleAdminPanel={this.toggleAdminPanel} />
     ) : (
       <MapContainer toggleAdminPanel={this.toggleAdminPanel} />

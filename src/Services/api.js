@@ -1,5 +1,4 @@
 export const get = async url => {
-  console.log(url)
   return fetch(url)
     .then(data => data.json())
     .catch(err => {
@@ -7,8 +6,15 @@ export const get = async url => {
     })
 }
 
-export const post = async (url, options) =>
-  fetch(url, options)
+export const post = async (url, body, options) =>
+  fetch(url, {
+    ...options,
+    body: JSON.stringify(body),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    }
+  })
     .then(data => data.json())
     .catch(err => {
       throw err

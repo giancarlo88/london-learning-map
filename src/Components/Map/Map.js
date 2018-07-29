@@ -10,14 +10,14 @@ const StyledMap = styled.div`
   width: 100vw;
 `
 
-const MapComponent = ({ data = {}, handleClick, selectedMarker, toggleAdminPanel }) => {
+const MapComponent = ({ data = [], handleClick, selectedMarker, toggleAdminPanel }) => {
   const dataForSelectedMarker =
     data.find(({ index }) => index === selectedMarker) || {}
   const { title, info } = dataForSelectedMarker
 
   return (
     <StyledMap>
-      <button onClick={toggleAdminPanel} />
+      <button onClick={toggleAdminPanel}>Add a pointer</button>
       <GoogleMapsReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={{ lat: 51.5199975, lng: -0.1003068 }}

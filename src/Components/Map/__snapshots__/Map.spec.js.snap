@@ -2,6 +2,7 @@
 
 exports[`MapComponent @renders should render 1`] = `
 <styled.div>
+  <button />
   <GoogleMap
     bootstrapURLKeys={
       Object {
