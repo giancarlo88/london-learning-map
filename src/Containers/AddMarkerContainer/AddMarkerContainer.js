@@ -12,14 +12,11 @@ class AddMarkerContainer extends Component {
       xCord: '',
       yCord: '',
       title: '',
-      info: ''
+      info: '',
+      username: '',
+      password: '',
+      error: null
     }
-    this.mapRef=React.createRef()
-  }
-
-  componentDidMount() {
-    console.log(this.mapRef)
-    console.log(this.mapRef.current.firstChild)
   }
 
   handleChange = e => {
@@ -33,9 +30,10 @@ class AddMarkerContainer extends Component {
 
   handleLogonFormSubmit = async e => {
     e.preventDefault()
+    const { username, password } = this.state
     const body = {
-      username: 'gcgp88',
-      password: 'asdf1234'
+      username,
+      password
     }
     try {
       const res = await post(
@@ -45,13 +43,22 @@ class AddMarkerContainer extends Component {
           credentials: 'include'
         }
       )
-      if (res && res.status === 200) {
+      if (res && res.authenticated) {
         this.setState({
-          isAuthenticated: true
+          isAuthenticated: true,
+          error: null
+        })
+      } else {
+        alert(res.message)
+        this.setState({
+          error: res.message
         })
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      const { message } = error
+      this.setState({
+        error: message
+      })
     }
   }
 
@@ -63,7 +70,32 @@ class AddMarkerContainer extends Component {
     })
   }
 
-  handleMarkerSubmit = () => {}
+  handleMarkerSubmit = e => {
+    e.preventDefault()
+    const { xCord, yCord, title, info } = this.state
+    const body = {
+      xCord,
+      yCord,
+      title,
+      info
+    }
+    if (xCord && yCord && title && body) {
+      return post(`${process.env.REACT_APP_ENDPOINT_URL}/locations`, body, {
+        credentials: 'include'
+      }).then(res => {
+        if (res.index) {
+          res.msg && alert(res.msg)
+          this.setState({
+            xCord: '',
+            yCord: '',
+            title: '',
+            info: ''
+          })
+        }
+      })
+    }
+    return alert('Missing informatino')
+  }
 
   render() {
     const { isAuthenticated, xCord, yCord, title, info } = this.state
@@ -76,10 +108,12 @@ class AddMarkerContainer extends Component {
         handleChange={this.handleChange}
         handleMapClick={this.handleMapClick}
         handleSubmit={this.handleMarkerSubmit}
-        mapRef={this.mapRef}
       />
     ) : (
-      <LoginForm handleSubmit={this.handleLogonFormSubmit} />
+      <LoginForm
+        handleChange={this.handleChange}
+        handleSubmit={this.handleLogonFormSubmit}
+      />
     )
   }
 }

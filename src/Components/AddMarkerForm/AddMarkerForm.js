@@ -15,13 +15,12 @@ const StyledForm = styled.form`
 
 const AddMarkerForm = ({
   handleMapClick,
-  handleSumbit,
+  handleSubmit,
   handleChange,
   xCord,
   yCord,
   title,
-  info,
-  mapRef
+  info
 }) => {
   return (
     <StyledInputMap>
@@ -30,13 +29,13 @@ const AddMarkerForm = ({
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={{ lat: 51.5199975, lng: -0.1003068 }}
         defaultZoom={13}
-        ref={mapRef}
       >
         {xCord && yCord ? <Marker lat={xCord} lng={yCord} /> : null}
       </GoogleMapsReact>
-      <StyledForm onSubmit={handleSumbit} onChange={handleChange}>
+      <StyledForm onSubmit={handleSubmit} onChange={handleChange}>
         <input type="text" name="title" value={title} />
         <textarea name="info" value={info} />
+        <input type="submit" value="submit" />
       </StyledForm>
     </StyledInputMap>
   )
