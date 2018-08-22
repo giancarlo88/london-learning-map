@@ -1,26 +1,29 @@
 @font-face {
   font-family: 'Raleway';
   src: url(/Raleway-Bold.ttf);
-  font-weight: bold
+  font-weight: bold;
 }
 
-@font-face { 
+@font-face {
   font-family: 'Roboto Slab';
   src: url(/RobotoSlab-Regular.ttf);
+}
+
+* {
+  font-family: Roboto Slab, serif;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: Roboto Slab, serif;
 }
 
-h1, 
-h2, 
-h3, 
+h1,
+h2,
+h3,
 h4,
-h5, 
-h6 { 
-  font-family: Raleway; 
+h5,
+h6 {
+  font-family: Raleway;
   font-weight: bold;
 }

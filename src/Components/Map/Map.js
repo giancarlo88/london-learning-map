@@ -4,20 +4,28 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Marker from '../Marker/Marker'
 import DescriptionBox from '../DescriptionBox/DescriptionBox'
+import Button from '../Button/Button'
 
 const StyledMap = styled.div`
   height: 100vh;
   width: 100vw;
 `
 
-const MapComponent = ({ data = [], handleClick, selectedMarker, toggleAdminPanel }) => {
+const MapComponent = ({
+  data = [],
+  handleClick,
+  selectedMarker,
+  toggleAdminPanel
+}) => {
   const dataForSelectedMarker =
     data.find(({ index }) => index === selectedMarker) || {}
   const { title, info } = dataForSelectedMarker
 
   return (
     <StyledMap>
-      <button onClick={toggleAdminPanel}>Add a pointer</button>
+      <Button isFixed top={10} left={10} handleClick={toggleAdminPanel}>
+        Add a pointer
+      </Button>
       <GoogleMapsReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={{ lat: 51.5199975, lng: -0.1003068 }}
@@ -36,7 +44,14 @@ const MapComponent = ({ data = [], handleClick, selectedMarker, toggleAdminPanel
           )
         })}
       </GoogleMapsReact>
-      {selectedMarker && <DescriptionBox description={info} title={title} index={selectedMarker} handleCloseClick={handleClick}/>}
+      {selectedMarker && (
+        <DescriptionBox
+          description={info}
+          title={title}
+          index={selectedMarker}
+          handleCloseClick={handleClick}
+        />
+      )}
     </StyledMap>
   )
 }
