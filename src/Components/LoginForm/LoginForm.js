@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '../Button/Button';
 
 const LoginForm = ({ handleChange, handleSubmit }) => (
   <form onSubmit={handleSubmit}>
@@ -20,7 +21,7 @@ const LoginForm = ({ handleChange, handleSubmit }) => (
         placeholder="123456"
       />
     </label>
-    <input type="submit" label="Log In" />
+    <Button handleClick={handleSubmit}>Log In</Button>
   </form>
 )
 

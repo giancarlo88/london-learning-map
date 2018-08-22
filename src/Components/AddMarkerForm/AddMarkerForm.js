@@ -2,6 +2,7 @@ import React from 'react'
 import GoogleMapsReact from 'google-map-react'
 import styled from 'styled-components'
 import Marker from '../Marker/Marker'
+import Button from '../Button/Button'
 
 const StyledInputMap = styled.div`
   height: 100vh;
@@ -35,7 +36,7 @@ const AddMarkerForm = ({
       <StyledForm onSubmit={handleSubmit} onChange={handleChange}>
         <input type="text" name="title" value={title} />
         <textarea name="info" value={info} />
-        <input type="submit" value="submit" />
+        <Button handleClick={handleSubmit}>Submit!</Button>
       </StyledForm>
     </StyledInputMap>
   )
