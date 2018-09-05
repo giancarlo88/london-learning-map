@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// TODO: theme
 const StyledButton = styled.button`
   outline: none;
-  background-color: #1b9aaa;
+  background-color: ${props => props.theme.secondaryColor};
   border: 0;
   border-bottom: 2px solid #8aa4a8;
   border-right: 2px solid #8aa4a8;
@@ -12,7 +11,7 @@ const StyledButton = styled.button`
   height: 30px;
   font-family: Raleway, sans-serif;
   width: 100px;
-  color: #f8ffe5;
+  color: ${props => props.theme.textColor};
 `
 
 const FixedButton = styled(StyledButton)`

@@ -3,15 +3,30 @@ import GoogleMapsReact from 'google-map-react'
 import styled from 'styled-components'
 import Marker from '../Marker/Marker'
 import Button from '../Button/Button'
+import StyledInput from '../Input/Input'
+import TextArea from '../TextArea/TextArea'
+import InputContainer from '../InputContainer/InputContainer'
 
 const StyledInputMap = styled.div`
   height: 100vh;
   width: 100vw;
 `
 
+const StyledTextArea = styled(TextArea)`
+  height: 150px;
+  display: block;
+  width: 80%
+`
+
 const StyledForm = styled.form`
-  position: absolute;
+  background-color: ${props => props.theme.white};
   bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  padding: 10px;
 `
 
 const AddMarkerForm = ({
@@ -34,8 +49,18 @@ const AddMarkerForm = ({
         {xCord && yCord ? <Marker lat={xCord} lng={yCord} /> : null}
       </GoogleMapsReact>
       <StyledForm onSubmit={handleSubmit} onChange={handleChange}>
-        <input type="text" name="title" value={title} />
-        <textarea name="info" value={info} />
+        <InputContainer>
+          <label>
+            Location Title
+            <StyledInput type="text" name="title" value={title} />
+          </label>
+        </InputContainer>
+        <InputContainer>
+          <label>
+            Description
+            <StyledTextArea name="info" value={info} />
+          </label>
+        </InputContainer>
         <Button handleClick={handleSubmit}>Submit!</Button>
       </StyledForm>
     </StyledInputMap>
